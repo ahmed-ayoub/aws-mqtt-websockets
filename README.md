@@ -2,7 +2,7 @@
 Implementation of a middleware to use AWS MQTT service through websockets. Aiming the esp8266 platform
 
 ## ChangeLog
-
+* 1.1.1 - support AWS IOT custom authorizer
 * 1.1.0 - can use AWS STS temporary credentials - change some dynamic to static memory allocation to avoid memory fragmentation
 * 1.0.1 - works with arduinoWebSockets v.2.0.5 and arduino/esp sdk 2.3.0
 * 1.0.alpha - stable - works with arduinoWebSockets v.2.0.2 and arduino/esp sdk 2.1.0
@@ -47,18 +47,29 @@ It is transparent. It is the same as the usage of Paho. There is just some chang
 * region of your aws iot service
 * aws user key \*\*
 * aws user secret key
+* if you will use custom authorizer, set the following values
+* aws custom auth name
+* aws custom header name
+* aws custom token value
+* aws custom signature
+* call setUseCustomAuth(true)
+* no need to set the aws user and secret key
 
  \*\* It is a good practice creating a new user (and grant just iot services permission). Avoid use the key/secret key of your main aws console user
  
  ```
  //AWS IOT config, change these:
-char wifi_ssid[]       = "your-ssid";
-char wifi_password[]   = "your-password";
-char aws_endpoint[]    = "your-endpoint.iot.eu-west-1.amazonaws.com";
-char aws_key[]         = "your-iam-key";
-char aws_secret[]      = "your-iam-secret-key";
-char aws_region[]      = "eu-west-1";
-const char* aws_topic  = "$aws/things/your-device/shadow/update";
+char wifi_ssid[] = "your-ssid";
+char wifi_password[] = "your-password";
+char aws_endpoint[] = "your-endpoint.iot.eu-west-1.amazonaws.com";
+char aws_key[] = "your-iam-key";
+char aws_secret[] = "your-iam-secret-key";
+char aws_region[] = "eu-west-1";
+char aws_custom_auth_name[] = "your-custom-auth-name";
+char aws_custom_header_name[] = "your-header-name";
+char aws_custom_token_value[] = "your-token-value";
+char aws_custom_signature[] = "your-signed-token-value";
+const char *aws_topic = "$aws/things/your-device/shadow/update";
 int port = 443;
 
 //MQTT config
